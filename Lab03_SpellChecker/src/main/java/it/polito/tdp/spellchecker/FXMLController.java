@@ -63,15 +63,25 @@ public class FXMLController {
     @FXML
     void doSpellCheck(ActionEvent event) {
     	
-    	String inserisci = txtInserisciTesto.getText();
+    	txtErrori.clear();
+    	txtInserisciTesto.clear();
     	
-    	String ins = inserisci.replaceAll("[.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+    	if(!model.addDictionary(cBoxLingue.getValue())) {
+    		txtErrori.appendText("dizionario non caricato!");
+    		return;
+    	}else {
+    		String testo = txtInserisciTesto.getText();
+//         model.setInserimento(txtInserisciTesto.getText());
+         lbError.setText("sono stati trovati: " + model.errori(cBoxLingue.getValue()) + " errori!");
+        String paroleErrate = model.stampaErorri();
+//        System.out.println(paroleErrate);
+         txtErrori.appendText(testo);
+         lblTime.setText(Long.toString(System.currentTimeMillis()));
+           	
+    		
+    		
+    	}
     	
-    	model.setInserimento(ins);
-    	
-    	txtErrori.appendText(model.toString());
-    	
-     
     }
 
     @FXML
