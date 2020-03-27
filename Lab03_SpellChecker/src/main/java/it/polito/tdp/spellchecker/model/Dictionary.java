@@ -56,6 +56,12 @@ public class Dictionary {
 	public List<String> getDizionarioItaliano() {
 		return dizionarioItaliano;
 	}
+
+	public void clear() {
+		dizionarioInglese.clear();
+		dizionarioItaliano.clear();
+		
+	}
 	
 	
 	

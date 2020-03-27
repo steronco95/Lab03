@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.spellchecker.model.Model;
-import it.polito.tdp.spellchecker.model.RichWord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,6 +52,11 @@ public class FXMLController {
     @FXML
     void doClearText(ActionEvent event) {
 
+    	model.clear();
+    	txtInserisciTesto.clear();
+    	txtErrori.clear();
+    	
+    	
     }
 
     @FXML
@@ -64,21 +68,19 @@ public class FXMLController {
     void doSpellCheck(ActionEvent event) {
     	
     	txtErrori.clear();
-    	txtInserisciTesto.clear();
+    	model.clearErrori();
     	
     	if(!model.addDictionary(cBoxLingue.getValue())) {
     		txtErrori.appendText("dizionario non caricato!");
     		return;
     	}else {
-    		String testo = txtInserisciTesto.getText();
-//         model.setInserimento(txtInserisciTesto.getText());
-         lbError.setText("sono stati trovati: " + model.errori(cBoxLingue.getValue()) + " errori!");
-        String paroleErrate = model.stampaErorri();
-//        System.out.println(paroleErrate);
-         txtErrori.appendText(testo);
-         lblTime.setText(Long.toString(System.currentTimeMillis()));
-           	
     		
+    		model.setInserimento(txtInserisciTesto.getText());
+    		model.errori(cBoxLingue.getValue());
+    		txtErrori.appendText(model.stampaErorri());
+    		lbError.setText("sono stati trovati: " +model.getErrori().size() + " errori!");
+    		lblTime.setText("tempo impiegato: " + Long.toString(System.currentTimeMillis()) + " millisecondi!");
+   
     		
     	}
     	

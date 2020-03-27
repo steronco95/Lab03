@@ -13,14 +13,16 @@ public class Model {
 	private List<String> errori = new LinkedList<>();
 	private String value;
 	
+	
 	public void setInserimento(String ins) {
 		String testo = ins.replaceAll("[.,\\/#!?$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
 		
 		String [] wrd = testo.split(" ");
+
 		
-		for(String s : wrd) {
-			paroleInserite.add(s);
-		}
+		
+		paroleInserite = Arrays.asList(wrd);
+		
 		
 			
 	}
@@ -32,41 +34,58 @@ public class Model {
 		return dictionary.addDictionary(value);
 	}
 	
-	public int errori(String string) {
+	public void errori(String string) {
 		
 		if(string.equals("English")) {
 			for(String s : paroleInserite) {
 				if(!dictionary.getDizionarioInglese().contains(s)) {
-					countErrori++;
 					errori.add(s);
 				}
 			}
-			return countErrori;
+			
 			
 		}else if(string.equals("Italian")) {
 			for(String s : paroleInserite) {
 				if(!dictionary.getDizionarioItaliano().contains(s)) {
-					countErrori++;
 					errori.add(s);
 				}
 			}
 			
-			return countErrori;
+			
 		}
 		
-		return -1;
+		
 	}
 	
 	public String stampaErorri() {
 		
 		StringBuffer result = new StringBuffer();
 		
-			for(String s : paroleInserite) {
+			for(String s : errori) {
 				result.append(s).append("\n");
 			}
 			
+			
+			
 			return result.toString();
 		
+		
+	}
+	
+	public List<String> getErrori(){
+		return errori;
+	}
+
+	public void clear() {
+		
+		dictionary.clear();
+		errori.clear();
+		
+		
+	}
+
+	public void clearErrori() {
+		errori.clear();
 		
 	}
 	
